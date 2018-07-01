@@ -7,18 +7,27 @@
     android:padding="@dimen/activity_margin">
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/catalog_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
         android:textAppearance="?android:textAppearanceMedium"
-        android:textColor="#2B3D4D"  />
+        android:textColor="#2B3D4D" />
 
     <TextView
-        android:id="@+id/summary"
+        android:id="@+id/catalog_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
         android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#AEB6BD"  />
+        android:textColor="#AEB6BD"/>
+
+    <TextView
+        android:id="@+id/catalog_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:textAppearance="?android:textAppearanceSmall"
+        android:textColor="#AEB6BD" />
+
 </LinearLayout>

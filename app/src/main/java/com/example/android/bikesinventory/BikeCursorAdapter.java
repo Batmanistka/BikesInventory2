@@ -24,20 +24,20 @@ public class BikeCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView nameTextView = view.findViewById(R.id.name);
-        TextView summaryTextView = view.findViewById(R.id.summary);
+        TextView nameCatalogTextView = view.findViewById(R.id.catalog_name);
+        TextView priceCatalogTextView = view.findViewById(R.id.catalog_price);
+        TextView quantityCatalogTextView = view.findViewById(R.id.catalog_quantity);
 
         int productNameColumnIndex = cursor.getColumnIndex(Contract.BikeEntry.COLUMN_PRODUCT_NAME);
-        int suppplierNameColumnIndex = cursor.getColumnIndex(Contract.BikeEntry.COLUMN_SUPPLIER_NAME);
+        int priceColumnIndex = cursor.getColumnIndex(Contract.BikeEntry.COLUMN_PRICE);
+        int quantityColumnIndex = cursor.getColumnIndex(Contract.BikeEntry.COLUMN_QUANTITY);
 
         String bikeName = cursor.getString(productNameColumnIndex);
-        String suppplierName = cursor.getString(suppplierNameColumnIndex);
+        String priceBike = cursor.getString(priceColumnIndex);
+        String quantityBike = cursor.getString(quantityColumnIndex);
 
-        if (TextUtils.isEmpty(suppplierName)) {
-            suppplierName = context.getString(R.string.unknown_supplier);
-        }
-        // Populate fields with extracted properties
-        nameTextView.setText(bikeName);
-        summaryTextView.setText(suppplierName);
+        nameCatalogTextView.setText(bikeName);
+        priceCatalogTextView.setText(priceBike);
+        quantityCatalogTextView.setText(quantityBike);
     }
 }

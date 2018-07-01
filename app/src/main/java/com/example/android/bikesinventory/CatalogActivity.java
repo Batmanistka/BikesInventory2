@@ -105,7 +105,8 @@ public class CatalogActivity extends AppCompatActivity implements
         String[] projection = {
                 BikeEntry._ID,
                 BikeEntry.COLUMN_PRODUCT_NAME,
-                BikeEntry.COLUMN_SUPPLIER_NAME};
+                BikeEntry.COLUMN_PRICE,
+                BikeEntry.COLUMN_QUANTITY};
 
         return new CursorLoader(this,
                 BikeEntry.CONTENT_URI,
