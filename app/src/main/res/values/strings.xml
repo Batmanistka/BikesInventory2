@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">Bikes Inventory second</string>
+
+    <string name="action_insert_bike_data">Insert Data</string>
+
+    <string name="action_delete_all_entries">Delete All Bikes</string>
+
+    <string name="editor_activity_title_new_bike">Add a Bike</string>
+
+    <string name="editor_activity_title_edit_bike">Edit Bike</string>
+
+    <string name="action_save">Save</string>
+
+    <string name="action_delete">Delete</string>
+
+    <string name="category_bike">Bike</string>
+
+    <string name="category_supplier">Supplier</string>
+
+    <string name="product_name">Name</string>
+
+    <string name="supplier_name">Supplier Name</string>
+
+    <string name="quantity">Quantity</string>
+
+    <string name="supplier_phone">Supplier phone</string>
+
+    <string name="price">Price</string>
+
+    <string name="unit_price">zł</string>
+
+    <string name="empty_view_title_text">It\'s time for a ride</string>
+
+    <string name="empty_view_subtitle_text">Get started by adding a bike</string>
+
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+
+    <string name="discard">Discard</string>
+
+    <string name="keep_editing">Keep Editing</string>
+
+    <string name="delete_dialog_msg">Delete this bike?</string>
+
+    <string name="delete">Delete</string>
+
+    <string name="cancel">Cancel</string>
+
+    <string name="editor_delete_bike_successful">Bike deleted</string>
+
+    <string name="editor_delete_bike_failed">Error with deleting bike</string>
+
+    <string name="editor_insert_bike_successful">Bike saved</string>
+
+    <string name="editor_insert_bike_failed">Problem with saving bike</string>
+
+    <string name="editor_update_bike_successful">Bike updated</string>
+
+    <string name="editor_update_bike_failed">Problem with updating bike</string>
+
+    <string name="unknown_supplier">Unknown supplier</string>
+
+</resources>
