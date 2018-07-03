@@ -6,5 +6,7 @@
 
     <color name="editorColorPrimary">#757575</color>
     <color name="editorColorPrimaryDark">#394450</color>
+    <color name="myGreen">#7CB342</color>
+    <color name="myGay">#A2AAB0</color>
 </resources>
 

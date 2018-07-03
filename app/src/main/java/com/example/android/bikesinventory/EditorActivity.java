@@ -13,11 +13,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.android.bikesinventory.data.Contract.BikeEntry;
@@ -43,6 +46,8 @@ public class EditorActivity extends AppCompatActivity implements
 
     private boolean mBikeHasChanged = false;
 
+    private int changeQuantity;
+
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -64,7 +69,6 @@ public class EditorActivity extends AppCompatActivity implements
             invalidateOptionsMenu();
         } else {
             setTitle(getString(R.string.editor_activity_title_edit_bike));
-
             getLoaderManager().initLoader(EXISTING_BIKE_LOADER, null, this);
         }
 
@@ -74,11 +78,64 @@ public class EditorActivity extends AppCompatActivity implements
         mPrice = findViewById(R.id.edit_price);
         mSupplierPhoneEditText = findViewById(R.id.edit_supplier_phone);
 
+        ImageButton mPlusQuantityBike = findViewById(R.id.plus_bike);
+        ImageButton mMinusQuantityBike = findViewById(R.id.minus_bike);
+
         mProductNameEditText.setOnTouchListener(mTouchListener);
         mSupplierEditText.setOnTouchListener(mTouchListener);
         mQuantity.setOnTouchListener(mTouchListener);
         mPrice.setOnTouchListener(mTouchListener);
         mSupplierPhoneEditText.setOnTouchListener(mTouchListener);
+
+        mPlusQuantityBike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String quantity = mQuantity.getText().toString();
+                if (TextUtils.isEmpty(quantity)) {
+                    Toast.makeText(EditorActivity.this, R.string.editor_quantity_empty, Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    changeQuantity = Integer.parseInt(quantity);
+                    mQuantity.setText(String.valueOf(changeQuantity + 1));
+                }
+            }
+        });
+
+        mMinusQuantityBike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String quantity = mQuantity.getText().toString();
+                if (TextUtils.isEmpty(quantity)) {
+                    Toast.makeText(EditorActivity.this, R.string.editor_quantity_empty, Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    changeQuantity = Integer.parseInt(quantity);
+                    if ((changeQuantity - 1) >= 0) {
+                        mQuantity.setText(String.valueOf(changeQuantity - 1));
+                    } else {
+                        Toast.makeText(EditorActivity.this, R.string.editor_quantity_less_then_0, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+
+        //setting up the phone button in the editor activity to call the supplier
+        final Button mCallToOrderButton = findViewById(R.id.call_to_order);
+
+        mCallToOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String phoneNumber = mSupplierPhoneEditText.getText().toString().trim();
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + phoneNumber));
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+
+                }
+            }
+
+        });
     }
 
     private void saveBike() {

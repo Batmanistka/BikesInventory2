@@ -1,33 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/activity_margin">
+    android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/catalog_name"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:textColor="#2B3D4D" />
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_margin">
 
-    <TextView
-        android:id="@+id/catalog_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#AEB6BD"/>
+        <TextView
+            android:id="@+id/catalog_name"
+            style="@style/TitleListContentTextView" />
 
-    <TextView
-        android:id="@+id/catalog_quantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:textAppearance="?android:textAppearanceSmall"
-        android:textColor="#AEB6BD" />
+        <LinearLayout
+            style="@style/LinearLayoutListStyle1"
+            android:layout_weight="1">
 
+            <TextView
+                android:id="@+id/catalog_price_text"
+                style="@style/EditorUnitsStyle2"
+                android:text="@string/catalog_price_hard_text"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/catalog_price"
+                style="@style/ListContentTextView" />
+
+            <TextView
+                android:id="@+id/label_weight_units2"
+                style="@style/EditorUnitsStyle2"
+                android:paddingLeft="6dp"
+                android:text="@string/unit_price"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/LinearLayoutListStyle1">
+
+            <TextView
+                android:id="@+id/catalog_quantity_text"
+                style="@style/EditorUnitsStyle2"
+                android:text="@string/catalog_quantity_hard_text" />
+
+            <TextView
+                android:id="@+id/catalog_quantity"
+                style="@style/ListContentTextView" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/sell_button"
+        style="@style/ListButton"
+        android:src="@drawable/sell7" />
 </LinearLayout>

@@ -25,9 +25,11 @@
 
     <string name="supplier_phone">Supplier phone</string>
 
+    <string name="call_to_order">Call to order</string>
+
     <string name="price">Price</string>
 
-    <string name="unit_price">zł</string>
+    <string name="unit_price"> zl</string>
 
     <string name="empty_view_title_text">It\'s time for a ride</string>
 
@@ -58,5 +60,14 @@
     <string name="editor_update_bike_failed">Problem with updating bike</string>
 
     <string name="unknown_supplier">Unknown supplier</string>
+
+    <string name="editor_quantity_empty">Please select quantity</string>
+
+    <string name="editor_quantity_less_then_0">Quantity cant be less then 0</string>
+
+    <string name="catalog_quantity_hard_text">Quantity: </string>
+
+    <string name="catalog_price_hard_text">Price: </string>
+
 
 </resources>

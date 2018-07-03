@@ -12,6 +12,38 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="FirstImage">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <style name="Fab">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_margin">@dimen/fab_margin</item>
+    </style>
+
+    <style name="CatalogTextView">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    </style>
+
+    <style name="CatalogTextView2">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+    </style>
+
     <style name="CategoryStyle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">0dp</item>
@@ -23,11 +55,72 @@
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
+    <style name="ImageButtonQuantity">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">1dp</item>
+    </style>
+
+    <style name="EditQuantity">
+        <item name="android:layout_width">85dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:inputType">number</item>
+    </style>
+
     <style name="EditorFieldStyle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:layout_marginTop">6dp</item>
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    </style>
+
+    <style name="EditorFieldStyle2">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    </style>
+
+    <style name="EditorButton">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:inputType">number</item>
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@color/colorAccent</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    </style>
+
+    <style name="TitleListContentTextView">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="ListContentTextView">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+    </style>
+
+    <style name="ListButton">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginRight">32dp</item>
     </style>
 
     <style name="EditorUnitsStyle">
@@ -35,8 +128,42 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:paddingRight">16dp</item>
-        <item name="android:paddingTop">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:textSize">17sp</item>
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
+
+    <style name="EditorUnitsStyle2">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+    </style>
+
+    <style name="LinearLayoutEditorStyle1">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="LinearLayoutEditorStyle2">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:textColor">@color/myGay</item>
+    </style>
+
+    <style name="LinearLayoutListStyle1">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
 
 </resources>
