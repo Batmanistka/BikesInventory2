@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -38,20 +39,20 @@ public class BikeCursorAdapter extends CursorAdapter {
         int quantityColumnIndex = cursor.getColumnIndex(Contract.BikeEntry.COLUMN_QUANTITY);
 
         String bikeName = cursor.getString(productNameColumnIndex);
-        String priceBike = cursor.getString(priceColumnIndex);
-        String quantityBike = cursor.getString(quantityColumnIndex);
+        String priceBike = "Price: " + cursor.getString(priceColumnIndex) + " zl";
+        String quantityBike = "Quantity: " + cursor.getString(quantityColumnIndex);
 
         nameCatalogTextView.setText(bikeName);
         priceCatalogTextView.setText(priceBike);
         quantityCatalogTextView.setText(quantityBike);
 
         String currentQuantityString = cursor.getString(quantityColumnIndex);
+
         final int currentQuantity = Integer.valueOf(currentQuantityString);
 
         final int productId = cursor.getInt(cursor.getColumnIndex(Contract.BikeEntry._ID));
 
         sellButton.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View v) {
                 if (currentQuantity > 0) {
                     int newQuantity = currentQuantity - 1;

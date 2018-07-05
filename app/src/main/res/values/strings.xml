@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Bikes Inventory second</string>
 
-    <string name="action_insert_bike_data">Insert Data</string>
+    <string name="action_insert_bike_data">Quick Insert Data</string>
 
     <string name="action_delete_all_entries">Delete All Bikes</string>
 
