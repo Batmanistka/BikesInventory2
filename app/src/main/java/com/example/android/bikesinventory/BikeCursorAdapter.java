@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -60,8 +59,7 @@ public class BikeCursorAdapter extends CursorAdapter {
                     ContentValues values = new ContentValues();
                     values.put(Contract.BikeEntry.COLUMN_QUANTITY, newQuantity);
                     context.getContentResolver().update(quantityUri, values, null, null);
-                }
-                else {
+                } else {
                     Toast.makeText(context, "This bike is out of stock", Toast.LENGTH_SHORT).show();
                 }
             }

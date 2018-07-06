@@ -69,9 +69,9 @@ public class CatalogActivity extends AppCompatActivity implements
         ContentValues values = new ContentValues();
         values.put(BikeEntry.COLUMN_PRODUCT_NAME, "Cannondale");
         values.put(BikeEntry.COLUMN_SUPPLIER_NAME, "AmiBike");
-        values.put(BikeEntry.COLUMN_QUANTITY, 0);
-        values.put(BikeEntry.COLUMN_SUPPLIER_PHONE, 0);
-        values.put(BikeEntry.COLUMN_PRICE, 0);
+        values.put(BikeEntry.COLUMN_QUANTITY, 1);
+        values.put(BikeEntry.COLUMN_SUPPLIER_PHONE, 100000000);
+        values.put(BikeEntry.COLUMN_PRICE, 3400);
 
         Uri newUri = getContentResolver().insert(BikeEntry.CONTENT_URI, values);
     }

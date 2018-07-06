@@ -65,9 +65,6 @@ public class Provider extends ContentProvider {
         return cursor;
     }
 
-    /**
-     * Returns the MIME type of data for the content URI.
-     */
     @Override
     public String getType(@NonNull Uri uri) {
         final int match = sUriMatcher.match(uri);
@@ -79,7 +76,6 @@ public class Provider extends ContentProvider {
             default:
                 throw new IllegalStateException("Unkown URI" + uri + " with match " + match);
         }
-
     }
 
     @Override
@@ -131,89 +127,89 @@ public class Provider extends ContentProvider {
         return ContentUris.withAppendedId(uri, id);
     }
 
-        @Override
-        public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
+    @Override
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
 
-            SQLiteDatabase database = mDbHelper.getWritableDatabase();
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
-            int rowsDeleted;
+        int rowsDeleted;
 
-            final int match = sUriMatcher.match(uri);
-            switch (match) {
-                case BIKES:
-                    rowsDeleted = database.delete(BikeEntry.TABLE_NAME, selection, selectionArgs);
-                    break;
-                case BIKE_ID:
-                    selection = BikeEntry._ID + "=?";
-                    selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                    rowsDeleted = database.delete(BikeEntry.TABLE_NAME, selection, selectionArgs);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Deletion is not supported for " + uri);
-            }
-
-            if (rowsDeleted != 0) {
-                Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
-            }
-            return rowsDeleted;
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case BIKES:
+                rowsDeleted = database.delete(BikeEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            case BIKE_ID:
+                selection = BikeEntry._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                rowsDeleted = database.delete(BikeEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Deletion is not supported for " + uri);
         }
 
-        @Override
-        public int update(@NonNull Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
-
-            final int match = sUriMatcher.match(uri);
-            switch (match) {
-                case BIKES:
-                    return updateBikes(uri, contentValues, selection, selectionArgs);
-                case BIKE_ID:
-                    selection = BikeEntry._ID + "=?";
-                    selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                    return updateBikes(uri, contentValues, selection, selectionArgs);
-                default:
-                    throw new IllegalArgumentException("Update is not supported for " + uri);
-            }
+        if (rowsDeleted != 0) {
+            Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
         }
+        return rowsDeleted;
+    }
 
-        private int updateBikes(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+    @Override
+    public int update(@NonNull Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
 
-            if (values.containsKey(BikeEntry.COLUMN_PRODUCT_NAME)) {
-                String productName = values.getAsString(BikeEntry.COLUMN_PRODUCT_NAME);
-                if (productName == null) {
-                    throw new IllegalArgumentException(" Product requires a name");
-                }
-            }
-
-            if (values.containsKey(BikeEntry.COLUMN_PRICE)) {
-                Integer price = values.getAsInteger(BikeEntry.COLUMN_PRICE);
-                if (price != null && price < 0) {
-                    throw new IllegalArgumentException("Product requires a valid price either 0 or above");
-                }
-            }
-
-            if (values.containsKey(BikeEntry.COLUMN_SUPPLIER_NAME)) {
-                String supplierName = values.getAsString(BikeEntry.COLUMN_SUPPLIER_NAME);
-                if (supplierName == null) {
-                    throw new IllegalArgumentException("Please insert a valid supplier name");
-                }
-            }
-
-            if (values.containsKey(BikeEntry.COLUMN_SUPPLIER_PHONE)) {
-                Long supplierPhoneNumber = values.getAsLong(BikeEntry.COLUMN_SUPPLIER_PHONE);
-                if (supplierPhoneNumber == null) {
-                    throw new IllegalArgumentException("Plese insert a valid phone number");
-                }
-                if (values.size() == 0) {
-                    return 0;
-                }
-            }
-
-            SQLiteDatabase database = mDbHelper.getWritableDatabase();
-
-            int rowsUpdated = database.update(BikeEntry.TABLE_NAME, values, selection, selectionArgs);
-
-            if (rowsUpdated != 0)
-                Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
-
-            return rowsUpdated;
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case BIKES:
+                return updateBikes(uri, contentValues, selection, selectionArgs);
+            case BIKE_ID:
+                selection = BikeEntry._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                return updateBikes(uri, contentValues, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException("Update is not supported for " + uri);
         }
     }
+
+    private int updateBikes(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+
+        if (values.containsKey(BikeEntry.COLUMN_PRODUCT_NAME)) {
+            String productName = values.getAsString(BikeEntry.COLUMN_PRODUCT_NAME);
+            if (productName == null) {
+                throw new IllegalArgumentException(" Product requires a name");
+            }
+        }
+
+        if (values.containsKey(BikeEntry.COLUMN_PRICE)) {
+            Integer price = values.getAsInteger(BikeEntry.COLUMN_PRICE);
+            if (price != null && price < 0) {
+                throw new IllegalArgumentException("Product requires a valid price either 0 or above");
+            }
+        }
+
+        if (values.containsKey(BikeEntry.COLUMN_SUPPLIER_NAME)) {
+            String supplierName = values.getAsString(BikeEntry.COLUMN_SUPPLIER_NAME);
+            if (supplierName == null) {
+                throw new IllegalArgumentException("Please insert a valid supplier name");
+            }
+        }
+
+        if (values.containsKey(BikeEntry.COLUMN_SUPPLIER_PHONE)) {
+            Long supplierPhoneNumber = values.getAsLong(BikeEntry.COLUMN_SUPPLIER_PHONE);
+            if (supplierPhoneNumber == null) {
+                throw new IllegalArgumentException("Plese insert a valid phone number");
+            }
+            if (values.size() == 0) {
+                return 0;
+            }
+        }
+
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        int rowsUpdated = database.update(BikeEntry.TABLE_NAME, values, selection, selectionArgs);
+
+        if (rowsUpdated != 0)
+            Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
+
+        return rowsUpdated;
+    }
+}

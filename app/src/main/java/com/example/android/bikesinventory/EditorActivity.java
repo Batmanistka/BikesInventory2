@@ -28,12 +28,9 @@ import com.example.android.bikesinventory.data.Contract.BikeEntry;
 public class EditorActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
-    private Uri mCurrentBikeUri;
-
     private static final int EXISTING_BIKE_LOADER = 0;
-
     BikeCursorAdapter mBikeCursorAdapter;
-
+    private Uri mCurrentBikeUri;
     private EditText mProductNameEditText;
 
     private EditText mSupplierEditText;
@@ -166,8 +163,7 @@ public class EditorActivity extends AppCompatActivity implements
         if (mCurrentBikeUri == null &&
                 TextUtils.isEmpty(nameString) && TextUtils.isEmpty(priceString) &&
                 TextUtils.isEmpty(quantityString) && TextUtils.isEmpty(supplierNameString) &&
-                TextUtils.isEmpty(supplierPhoneString))
-        {
+                TextUtils.isEmpty(supplierPhoneString)) {
             Toast.makeText(this, getString(R.string.fill_fields), Toast.LENGTH_LONG).show();
             return;
         }
