@@ -91,7 +91,7 @@
                 android:id="@+id/edit_supplier_phone"
                 style="@style/EditorFieldStyle"
                 android:hint="@string/supplier_phone"
-                android:inputType="number" />
+                android:inputType="phone" />
 
             <Button
                 android:id="@+id/call_to_order"

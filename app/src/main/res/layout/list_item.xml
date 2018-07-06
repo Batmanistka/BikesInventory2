@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:descendantFocusability="blocksDescendants">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,5 +29,7 @@
     <ImageButton
         android:id="@+id/sell_button"
         style="@style/ListButton"
-        android:src="@drawable/sell7" />
+        android:src="@drawable/sell7"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 </LinearLayout>

@@ -86,6 +86,8 @@ public class EditorActivity extends AppCompatActivity implements
         mQuantity.setOnTouchListener(mTouchListener);
         mPrice.setOnTouchListener(mTouchListener);
         mSupplierPhoneEditText.setOnTouchListener(mTouchListener);
+        mPlusQuantityBike.setOnTouchListener(mTouchListener);
+        mMinusQuantityBike.setOnTouchListener(mTouchListener);
 
         mPlusQuantityBike.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,8 +121,6 @@ public class EditorActivity extends AppCompatActivity implements
             }
         });
 
-
-        //setting up the phone button in the editor activity to call the supplier
         final Button mCallToOrderButton = findViewById(R.id.call_to_order);
 
         mCallToOrderButton.setOnClickListener(new View.OnClickListener() {
@@ -138,22 +138,69 @@ public class EditorActivity extends AppCompatActivity implements
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        if (!mBikeHasChanged) {
+            super.onBackPressed();
+            return;
+        }
+
+        DialogInterface.OnClickListener discardButtonClickListener =
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                };
+
+        showUnsavedChangesDialog(discardButtonClickListener);
+    }
+
     private void saveBike() {
         String nameString = mProductNameEditText.getText().toString().trim();
-        String supplierNameString = mSupplierEditText.getText().toString().trim();
         String quantityString = mQuantity.getText().toString().trim();
-        int quantity = Integer.parseInt(quantityString);
         String priceString = mPrice.getText().toString().trim();
-        int price = Integer.parseInt(priceString);
+        String supplierNameString = mSupplierEditText.getText().toString().trim();
         String supplierPhoneString = mSupplierPhoneEditText.getText().toString().trim();
-        int supplierPhone = Integer.parseInt(supplierPhoneString);
+
+        if (mCurrentBikeUri == null &&
+                TextUtils.isEmpty(nameString) && TextUtils.isEmpty(priceString) &&
+                TextUtils.isEmpty(quantityString) && TextUtils.isEmpty(supplierNameString) &&
+                TextUtils.isEmpty(supplierPhoneString))
+        {
+            Toast.makeText(this, getString(R.string.fill_fields), Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(nameString)) {
+            mProductNameEditText.setError(getString(R.string.fill_name_field));
+            return;
+        }
+        if (TextUtils.isEmpty(priceString)) {
+            mPrice.setError(getString(R.string.fill_price_field));
+            return;
+        }
+
+        if (TextUtils.isEmpty(quantityString)) {
+            mQuantity.setError(getString(R.string.fill_quantity_field));
+            return;
+        }
+
+        if (TextUtils.isEmpty(supplierNameString)) {
+            mSupplierEditText.setError(getString(R.string.fill_sup_name_field));
+            return;
+        }
+        if (TextUtils.isEmpty(supplierPhoneString)) {
+            mSupplierPhoneEditText.setError(getString(R.string.fill_sup_phone_field));
+            return;
+        }
 
         ContentValues values = new ContentValues();
         values.put(BikeEntry.COLUMN_PRODUCT_NAME, nameString);
+        values.put(BikeEntry.COLUMN_QUANTITY, quantityString);
+        values.put(BikeEntry.COLUMN_PRICE, priceString);
         values.put(BikeEntry.COLUMN_SUPPLIER_NAME, supplierNameString);
-        values.put(BikeEntry.COLUMN_QUANTITY, quantity);
-        values.put(BikeEntry.COLUMN_PRICE, price);
-        values.put(BikeEntry.COLUMN_SUPPLIER_PHONE, supplierPhone);
+        values.put(BikeEntry.COLUMN_SUPPLIER_PHONE, supplierPhoneString);
 
         if (mCurrentBikeUri == null) {
             Uri newUri = getContentResolver().insert(BikeEntry.CONTENT_URI, values);
@@ -165,6 +212,8 @@ public class EditorActivity extends AppCompatActivity implements
                         Toast.LENGTH_SHORT).show();
             }
 
+            finish();
+
         } else {
             int rowsAffected = getContentResolver().update(mCurrentBikeUri, values, null, null);
             if (rowsAffected == 0) {
@@ -174,6 +223,7 @@ public class EditorActivity extends AppCompatActivity implements
                 Toast.makeText(this, getString(R.string.editor_update_bike_successful),
                         Toast.LENGTH_SHORT).show();
             }
+            finish();
         }
     }
 
@@ -198,7 +248,6 @@ public class EditorActivity extends AppCompatActivity implements
         switch (item.getItemId()) {
             case R.id.action_save:
                 saveBike();
-                finish();
                 return true;
             case R.id.action_delete:
                 showDeleteConfirmationDialog();
@@ -224,32 +273,15 @@ public class EditorActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onBackPressed() {
-        if (!mBikeHasChanged) {
-            super.onBackPressed();
-            return;
-        }
-
-        DialogInterface.OnClickListener discardButtonClickListener =
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                };
-
-        showUnsavedChangesDialog(discardButtonClickListener);
-    }
-
-    @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         String[] projection = {
                 BikeEntry._ID,
                 BikeEntry.COLUMN_PRODUCT_NAME,
-                BikeEntry.COLUMN_SUPPLIER_NAME,
+                BikeEntry.COLUMN_PRICE,
                 BikeEntry.COLUMN_QUANTITY,
+                BikeEntry.COLUMN_SUPPLIER_NAME,
                 BikeEntry.COLUMN_SUPPLIER_PHONE,
-                BikeEntry.COLUMN_PRICE};
+        };
 
         return new CursorLoader(this,
                 mCurrentBikeUri,
@@ -269,47 +301,45 @@ public class EditorActivity extends AppCompatActivity implements
             int productNameColumnIndex = cursor.getColumnIndex(BikeEntry.COLUMN_PRODUCT_NAME);
             int suppplierNameColumnIndex = cursor.getColumnIndex(BikeEntry.COLUMN_SUPPLIER_NAME);
             int quantityColumnIndex = cursor.getColumnIndex(BikeEntry.COLUMN_QUANTITY);
-            int suppplierPhoneColumnIndex = cursor.getColumnIndex(BikeEntry.COLUMN_SUPPLIER_PHONE);
+            int supplierPhoneColumnIndex = cursor.getColumnIndex(BikeEntry.COLUMN_SUPPLIER_PHONE);
             int priceColumnIndex = cursor.getColumnIndex(BikeEntry.COLUMN_PRICE);
 
             String currentName = cursor.getString(productNameColumnIndex);
-            String currentSupplierName = cursor.getString(suppplierNameColumnIndex);
-            int currentQuantity = cursor.getInt(quantityColumnIndex);
-            int currentPhone = cursor.getInt(suppplierPhoneColumnIndex);
             int currentPrice = cursor.getInt(priceColumnIndex);
+            int currentQuantity = cursor.getInt(quantityColumnIndex);
+            String currentSupplierName = cursor.getString(suppplierNameColumnIndex);
+            int currentPhone = cursor.getInt(supplierPhoneColumnIndex);
 
             mProductNameEditText.setText(currentName);
-            mSupplierEditText.setText(currentSupplierName);
-            mQuantity.setText(Integer.toString(currentQuantity));
-            mSupplierPhoneEditText.setText(Integer.toString(currentPhone));
             mPrice.setText(Integer.toString(currentPrice));
+            mQuantity.setText(Integer.toString(currentQuantity));
+            mSupplierEditText.setText(currentSupplierName);
+            mSupplierPhoneEditText.setText(Integer.toString(currentPhone));
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mProductNameEditText.setText("");
-        mSupplierEditText.setText("");
-        mQuantity.setText("");
-        mSupplierPhoneEditText.setText("");
         mPrice.setText("");
+        mQuantity.setText("");
+        mSupplierEditText.setText("");
+        mSupplierPhoneEditText.setText("");
     }
 
-    private void showUnsavedChangesDialog(
-            DialogInterface.OnClickListener discardButtonClickListener) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.unsaved_changes_dialog_msg);
-        builder.setPositiveButton(R.string.discard, discardButtonClickListener);
-        builder.setNegativeButton(R.string.keep_editing, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
+    private void deleteBike() {
+        if (mCurrentBikeUri != null) {
+            int rowsDeleted = getContentResolver().delete(mCurrentBikeUri, null, null);
+            if (rowsDeleted == 0) {
+                Toast.makeText(this, getString(R.string.editor_delete_bike_failed),
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, getString(R.string.editor_delete_bike_successful),
+                        Toast.LENGTH_SHORT).show();
             }
-        });
+        }
 
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+        finish();
     }
 
     private void showDeleteConfirmationDialog() {
@@ -332,16 +362,20 @@ public class EditorActivity extends AppCompatActivity implements
         alertDialog.show();
     }
 
-    private void deleteBike() {
-        if (mCurrentBikeUri != null) {
-            int rowsDeleted = getContentResolver().delete(mCurrentBikeUri, null, null);
-            if (rowsDeleted == 0) {
-                Toast.makeText(this, getString(R.string.editor_delete_bike_failed),
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, getString(R.string.editor_delete_bike_successful),
-                        Toast.LENGTH_SHORT).show();
+    private void showUnsavedChangesDialog(
+            DialogInterface.OnClickListener discardButtonClickListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.unsaved_changes_dialog_msg);
+        builder.setPositiveButton(R.string.discard, discardButtonClickListener);
+        builder.setNegativeButton(R.string.keep_editing, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
             }
-        }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

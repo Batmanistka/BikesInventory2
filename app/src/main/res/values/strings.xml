@@ -13,6 +13,18 @@
 
     <string name="action_delete">Delete</string>
 
+    <string name="fill_fields">Please, fill the blank fields</string>
+
+    <string name="fill_name_field">Please, fill name field</string>
+
+    <string name="fill_price_field">Please, fill price field</string>
+
+    <string name="fill_quantity_field">Please, fill quantity field</string>
+
+    <string name="fill_sup_name_field">Please, fill supplier name field</string>
+
+    <string name="fill_sup_phone_field">Please, fill supplier phone field</string>
+
     <string name="category_bike">Bike</string>
 
     <string name="category_supplier">Supplier</string>

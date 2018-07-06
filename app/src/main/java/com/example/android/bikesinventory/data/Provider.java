@@ -32,7 +32,6 @@ public class Provider extends ContentProvider {
 
     public boolean onCreate() {
 
-        // Creates a new database object.
         mDbHelper = new DbHelper(getContext());
         return true;
     }
@@ -54,9 +53,6 @@ public class Provider extends ContentProvider {
             case BIKE_ID:
                 selection = BikeEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-
-                // This will perform a query on the clothes table where the _id quals 3 to return a
-                // Curso containing that row of the table.
 
                 cursor = database.query(BikeEntry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
@@ -168,17 +164,17 @@ public class Provider extends ContentProvider {
             final int match = sUriMatcher.match(uri);
             switch (match) {
                 case BIKES:
-                    return updateClothes(uri, contentValues, selection, selectionArgs);
+                    return updateBikes(uri, contentValues, selection, selectionArgs);
                 case BIKE_ID:
                     selection = BikeEntry._ID + "=?";
                     selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                    return updateClothes(uri, contentValues, selection, selectionArgs);
+                    return updateBikes(uri, contentValues, selection, selectionArgs);
                 default:
                     throw new IllegalArgumentException("Update is not supported for " + uri);
             }
         }
 
-        private int updateClothes(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        private int updateBikes(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
 
             if (values.containsKey(BikeEntry.COLUMN_PRODUCT_NAME)) {
                 String productName = values.getAsString(BikeEntry.COLUMN_PRODUCT_NAME);
